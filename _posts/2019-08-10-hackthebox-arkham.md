@@ -260,7 +260,7 @@ class ARK_OBJ(object):
 if __name__ == "__main__":
     q = ARK_OBJ()
     q.reverse_dt()
- {% endhighlight %}
+{% endhighlight %}
  
  Et ensuite l'utilisation du programme est super simple, le premier argument vous devez spécifier votre fichier et le deuxième argument votre fichier de sortie.
  
