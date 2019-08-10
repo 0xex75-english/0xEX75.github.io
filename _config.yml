@@ -1,6 +1,6 @@
-title: "Seyptoo hacks stuff"
-author: "Seyptoo"
-url: "https://seyptoo.me"
+title: "0xEX75 hacks stuff"
+author: "0xEX75"
+url: "https://0xEX75.me"
 description: "CTF penetration, programmation, analyse de malware, développement des outils et bien d'autre chose."
 lang: "fr"
 
@@ -22,7 +22,7 @@ navigation:                  # (optional) site navigation in the header
 
 icons:                       # (optional) icons in the header, see http://fontawesome.com/icons
   envelope: "noemailsorry@gmail.com"
-  github: "https://github.com/Seyptoo"
+  github: "https://github.com/0xEX75"
   rss: "/contrast/feed.xml"
 
 # Pagination
