@@ -1,6 +1,6 @@
 ---
 title: "HackTheBox - Arkham"
-description: clm.png
+description: clm.jpg
 tags: ["Le système Arkham, disponible sur la platforme HackTheBox, fut très intéressant et amusante. Le niveau de difficulté était plutôt élevée, étant donné qu’une bonne énumération était amplement suffisante. De plus, j’ai appris beaucoup de chose tout au long de l’exploitation des failles de ce système."]
 ---
 
