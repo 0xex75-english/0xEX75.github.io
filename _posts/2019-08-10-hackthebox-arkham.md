@@ -204,7 +204,7 @@ Après avoir cherché un bon moment le type de payload approprié au système c'
     
 Il faudrait ensuite convertir ça en `HMACSHA1` et ensuite en `BASE64`, comme je suis de bonne humeur je crée un script en Python rien que pour vous.
 
-#coding:utf-8
+    #coding:utf-8
 
     import sys
     import hmac
@@ -267,7 +267,7 @@ Il faudrait ensuite convertir ça en `HMACSHA1` et ensuite en `BASE64`, comme je
  
  Le serveur distant nous renvoie bien les paquets dans notre système Linux.
  
-[![forthebadge made-with-python](ezgif-1-98fa1fa52fa5.gif)](ezgif-1-98fa1fa52fa5.gif)
+[![forthebadge made-with-python](../ezgif-1-98fa1fa52fa5.gif)](../ezgif-1-98fa1fa52fa5.gif)
 
 Reverse Shell
 ----
@@ -341,7 +341,7 @@ Pour lire ce fichier, nous devons installer l'outil `OST File Viewer` ([LIEN](ht
 
 A l'ouverture du programme sélectionner le fichier OST, et aller dans la section `Drafts` et BINGOO, vous avez le mot de passe de l'utilisateur `Batman`.
 
-![PICTURE](sans-titre.png)
+![PICTURE](../sans-titre.png)
 
 Utilisateur : `batman` <br />
 Mot de passe : `Zx^#QZX+T!123`
