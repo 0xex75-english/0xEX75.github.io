@@ -16,4 +16,7 @@ Avant de rentrer dans le sujet, nous devons comprendre comment fonctionne le sys
 
 Fonctiomment de XOR
 ----
+Le XOR est un opérateur logique qui correspond à un "OU exclusif" : c'est le (A OU B) qu'on utilise en logique mais qui exclue le cas où A et B sont simultanément vrais. Voici sa table de vérité :
+
+![Flower](https://image.noelshack.com/fichiers/2019/48/7/1575208363-capture-du-2019-12-01-14-39-48.png)
 
