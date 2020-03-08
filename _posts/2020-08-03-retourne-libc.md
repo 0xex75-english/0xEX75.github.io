@@ -131,9 +131,9 @@ Nous allons lancer `GDB` (GNU Debugger), et nous allons chercher l'adresse de la
     
 Donc, nous avons réussis à capturer les adresses de `system();`, `exit()` et finalement de la chaîne "`/bin/sh"`.
 
-- system(); : 0xf7e17660
-- exit();   : 0xf7e0a6f0
-- /bin/sh   : 0xf7f54f68
+- `system();` : `0xf7e17660
+- `exit();`   : `0xf7e0a6f0`
+- `/bin/sh`   : `0xf7f54f68`
 
 ![forthebadge made-with-python](https://fundacion-sadosky.github.io/guia-escritura-exploits/esoteric/imagenes/ret-2-libc.png)
 
