@@ -30,20 +30,27 @@ Dans des cas assez spécifique, la pile n'est pas exécutable donc c'est presque
 
 Voici un petit script en C qui ne fait pas grand chose :
 
+    #include <stdlib.h>
     #include <stdio.h>
     #include <string.h>
 
-    void foo(char* string);
+    void name(char*);
 
-    int main(int argc, char** argv) {
-              if (argc > 1)
-                foo(argv[1]);
-        return 0;
+    void name(char *f)
+    {
+        char firstname[10];
+        strcpy(firstname, f);
+        printf("Your name : %s\n", firstname);
     }
 
-    void foo(char* string) {
-              char buffer[256];
-              strcpy(buffer, string);
+    int main(int argc, char *argv[])
+    {
+        if(argc != 2)
+        {
+            exit(0);
+        }
+        name(argv[1]);
+        return 0;
     }
     
 Un programme basique qui ne fait pas grand chose, mais la vulnérabilité se trouve au niveau de la fonction `strcpy();`. Je suppose que vous savez que les fonctions comme `strcpy();`, `strcat();` etc.. ne sont pas du tout sécurisées donc il existe un système qui se nomme `FORTIFY_SOURCE` qui permet de remplacer les fonctions par des fonctions beaucoup plus sécurisées.
@@ -54,12 +61,12 @@ Ensuite, une petite compilation est nécessaire :
     root@0xEX75:~/libc# readelf -lW libc|grep GNU_STACK
     GNU_STACK      0x000000 0x0000000000000000 0x0000000000000000 0x000000 0x000000 RW  0x10
     
-(Le flag `E` n'est pas là, donc la pile n'est plus du tout exécutable.). Si nous essayons d'exécuter le programme après la compilation, le programme ne retournera strictement rien du tout, mais dans la mémoire il se passe des choses.
+(Le flag `E` n'est pas là, donc la pile n'est plus du tout exécutable.). Si nous essayons d'exécuter le programme après la compilation, cela fonctionne, mais dans la mémoire il se passe des choses.
 
-    root@0xEX75:~/libc# ./libc $(python -c 'print "A"*263')
-    root@0xEX75:~/libc# ./libc $(python -c 'print "A"*264')
+    root@0xEX75:~/libc# ./libc $(python -c 'print "A"*22')
+    root@0xEX75:~/libc# ./libc $(python -c 'print "A"*22')
     segmentation fault (core dumped)
     
-Nous pouvons aperçevoir que le programme plante après 263 caractères, donc l'`OFFSET` correspond exactement à 263 caractères, si nous effectuons un dépassement, la sauvegarde `sEIP` sera complètement écrasé et le programme plantera automatiquement.
+Nous pouvons aperçevoir que le programme plante après 22 caractères, donc l'`OFFSET` correspond exactement à 22 caractères, si nous effectuons un dépassement, la sauvegarde `sEIP` sera complètement écrasé et le programme plantera automatiquement.
 
 
