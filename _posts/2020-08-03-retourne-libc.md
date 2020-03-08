@@ -29,3 +29,29 @@ Dans des cas assez spécifique, la pile n'est pas exécutable donc c'est presque
 (Pour cette partie, nous désactiverons l'`ASLR`, car la technique de retourne à la libc fonctionne uniquement si la pile n'est pas exécutable et que l'ASLR n'est pas activé.)
 
 Voici un petit script en C qui ne fait pas grand chose :
+
+    #include <stdio.h>
+    #include <string.h>
+
+    void foo(char* string);
+
+    int main(int argc, char** argv) {
+              if (argc > 1)
+                foo(argv[1]);
+        return 0;
+    }
+
+    void foo(char* string) {
+              char buffer[256];
+              strcpy(buffer, string);
+    }
+    
+Un programme basique qui ne fait pas grand chose, mais la vulnérabilité se trouve au niveau de la fonction `strcpy();`. Je suppose que vous savez que les fonctions comme `strcpy();`, `strcat();` etc.. ne sont pas du tout sécurisées donc il existe un système qui se nomme `FORTIFY_SOURCE` qui permet de remplacer les fonctions par des fonctions beaucoup plus sécurisées.
+
+Ensuite, une petite compilation est nécessaire :
+
+    root@0xEX75:~/libc# gcc -fno-stack-protector libc.c -o libc
+    root@kali:~/libc# readelf -lW libc|grep GNU_STACK
+    GNU_STACK      0x000000 0x0000000000000000 0x0000000000000000 0x000000 0x000000 RW  0x10
+    
+(Le flag `E` n'est pas là, donc la pile n'est plus du tout exécutable.)
