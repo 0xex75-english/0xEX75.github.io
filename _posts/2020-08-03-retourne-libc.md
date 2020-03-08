@@ -135,3 +135,6 @@ Donc, nous avons réussis à capturer les adresses de `system();`, `exit()` et f
 - exit();   : 0xf7e0a6f0
 - /bin/sh   : 0xf7f54f68
 
+![forthebadge made-with-python](https://fundacion-sadosky.github.io/guia-escritura-exploits/esoteric/imagenes/ret-2-libc.png)
+
+Il suffit maintenant d'utiliser les adresses que nous avons capturer contre le programme afin de `pop` un shell.
