@@ -50,8 +50,14 @@ Un programme basique qui ne fait pas grand chose, mais la vulnérabilité se tro
 
 Ensuite, une petite compilation est nécessaire :
 
-    root@0xEX75:~/libc# gcc -fno-stack-protector libc.c -o libc
-    root@kali:~/libc# readelf -lW libc|grep GNU_STACK
+    root@0xEX75:~/libc# gcc -m32 -fno-stack-protector libc.c -o libc
+    root@0xEX75:~/libc# readelf -lW libc|grep GNU_STACK
     GNU_STACK      0x000000 0x0000000000000000 0x0000000000000000 0x000000 0x000000 RW  0x10
     
-(Le flag `E` n'est pas là, donc la pile n'est plus du tout exécutable.)
+(Le flag `E` n'est pas là, donc la pile n'est plus du tout exécutable.). Si nous essayons d'exécuter le programme après la compilation, le programme ne retournera strictement rien du tout, mais dans la mémoire il se passe des choses.
+
+    root@0xEX75:~/libc# ./libc $(python -c 'print "A"*263')
+    root@0xEX75:~/libc# ./libc $(python -c 'print "A"*264')
+    segmentation fault (core dumped)
+    
+Nous pouvons aperçevoir que le programme plante après 263 caractères, donc l'`OFFSET` correspond exactement à 263 caractères, si nous effectuons un dépassement, la sauvegarde `sEIP` sera complètement écrasé et le programme plantera automatiquement.
