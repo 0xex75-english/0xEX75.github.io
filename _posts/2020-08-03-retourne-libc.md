@@ -61,3 +61,5 @@ Ensuite, une petite compilation est nécessaire :
     segmentation fault (core dumped)
     
 Nous pouvons aperçevoir que le programme plante après 263 caractères, donc l'`OFFSET` correspond exactement à 263 caractères, si nous effectuons un dépassement, la sauvegarde `sEIP` sera complètement écrasé et le programme plantera automatiquement.
+
+
