@@ -20,7 +20,7 @@ Ce que nous avons vue la dernière fois en rapport avec les `Buffer Overflow` po
     
 Le `R` désigne tout simplement que la pile est en lecture et la lettre `W` correspond concrètement à l'écriture sur la pile et enfin la lettre `E` correspond à la pile exécutable, et c'est grâce à ce système que nous pouvons exécuter un shellcode car c'est le processeur qui exécute notre shellcode.
 
-![forthebadge made-with-python](https://i.imgur.com/PTuJSy1.png)
+![forthebadge made-with-python](https://2.bp.blogspot.com/-UPzV6M_ZsK8/W3B5kWiwYII/AAAAAAAAAeE/L1izLVAJGbwfh52XG4HjMtPDDMXC-bLqACLcBGAs/s1600/ret2libc.png)
 
 Dans des cas assez spécifique, la pile n'est pas exécutable donc c'est presque impossible de faire exécuter un shellcode au programme pour `pop` un shell par exemple. Donc les experts ont trouver une solution qui se nomme la technique de `retourne à la libc`, qui permet d'utiliser des fonctions de la `libc`, comme par exemple la fonction `system();` pour ensuite l'utiliser contre le programme.
 
