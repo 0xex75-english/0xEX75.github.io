@@ -145,8 +145,6 @@ Il suffit maintenant d'utiliser les adresses que nous avons capturer contre le p
     root
     # id
     uid=0(root) gid=0(root) groupes=0(root)
-    
-BINGO, mission réussi !
 
 ![forthebadge made-with-python](https://media.giphy.com/media/XqXDNFZREKMBq/giphy.gif)
 
