@@ -65,7 +65,7 @@ Ensuite, une petite compilation est nécessaire :
 (Le flag `E` n'est pas là, donc la pile n'est plus du tout exécutable.). Si nous essayons d'exécuter le programme après la compilation, cela fonctionne, mais dans la mémoire il se passe des choses.
 
     root@0xEX75:~/libc# ./libc $(python -c 'print "A"*22')
-    root@0xEX75:~/libc# ./libc $(python -c 'print "A"*22')
+    root@0xEX75:~/libc# ./libc $(python -c 'print "A"*23')
     segmentation fault (core dumped)
     
 Nous pouvons aperçevoir que le programme plante après 22 caractères, donc l'`OFFSET` correspond exactement à 22 caractères, si nous effectuons un dépassement, la sauvegarde `sEIP` sera complètement écrasé et le programme plantera automatiquement.
