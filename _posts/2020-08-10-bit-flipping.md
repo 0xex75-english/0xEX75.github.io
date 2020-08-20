@@ -31,4 +31,11 @@ Donc, l'attaque est relativement simple, supposons que nous avons un utilisateur
 
 # Pratique
 
-Dans mon cas, j'utiliserai un serveur `XAMPP` et d'installer `Mullitidae`, Mullitidae est un environnement de `pentest` assez intéréssant, n'hésitez pas à l'installer pour faire des testes intéréssants [here](https://www.owasp.org/index.php/OWASP_Mutillidae_2_Project) ! 
+Dans mon cas, j'utiliserai un serveur `XAMPP` et d'installer `Mullitidae`, Mullitidae est un environnement de `pentest`, n'hésitez pas à l'[installer](https://www.owasp.org/index.php/OWASP_Mutillidae_2_Project) pour faire des testes intéréssants. Démarrons simplement le service `APACHE` et `MYSQL`
+
+![forthebadge made-with-python](https://github.com/0xEX75/0xEX75.github.io/blob/master/Capture.PNG?raw=true)
+
+Dans la version 2.6.10 de Mutilidae, il existe une page appelée Niveau de privilège utilisateur. Ceci est conçu pour pratiquer l'attaque de retournement de bits CBC. Il se trouve sous: OWASP 2013, Authentification interrompue et gestion de session, Échelle de privilèges, afficher les privilèges des utilisateurs. 
+
+
+
