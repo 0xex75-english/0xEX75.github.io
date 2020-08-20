@@ -26,6 +26,8 @@ Le système est simple, le chiffrement `CBC` fonctionne par bloc, c'est-à-dire 
 Vous me poserez la question, comment la première valeur du bloc peut être chiffré, si il n'a pas de précédent ?
 C'est là que le système `IV` (Initialization vector ou Vecteur d'initialisation) rentre en jeu, il randomise une donnée aléatoire pour que il soit XORED avec le premier bloc et ainsi de suite jusqu'au dernier bloc, la formule ci-dessus résume la finalité.
 
+Donc, l'attaque est relativement simple, supposons que nous avons un utilisateur qui se nomme `admin` et le chiffrement du `Cookie` est `21232f297a57a5a743894a0e4a801fc3`, notre but concrètement est de changer la valeur `admin` en changeant seulement les bits du `Cookie`, par exemple `vb232f297a57a5a743894a0e4a801fc3` qui deviendra `bdmin`, l'idée est là, c'est de changer le comportement du `Cookie` est de lui afficher quelque chose d'autre pour accéder à un compte.
 
+# Pratique
 
 
