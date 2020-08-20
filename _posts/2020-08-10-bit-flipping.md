@@ -37,5 +37,8 @@ Dans mon cas, j'utiliserai un serveur `XAMPP` et d'installer `Mullitidae`, Mulli
 
 Dans la version 2.6.10 de Mutilidae, il existe une page appelée Niveau de privilège utilisateur. Ceci est conçu pour pratiquer l'attaque de retournement de bits CBC. Il se trouve sous: OWASP 2013, Authentification interrompue et gestion de session, Échelle de privilèges, afficher les privilèges des utilisateurs. 
 
+Comme vous pouvez le voir, le but de ce défi est de changer l'utilisateur et le groupe en `000`. La première chose dont nous avons besoin est l'`IV`. Nous devons utiliser un proxy qui se situe entre nous et le serveur pour intercepter la communation entre le `client` et le `serveur`. J'utiliserai `BurpSuite` pour cela. Burp suite est un outil utilisé pour aider au pentesting d'applications Web. Vous devez configurer votre navigateur pour passer par le proxy burp. La configuration du burp est hors de portée pour ce poste.
 
+![forthebadge made-with-python](https://raw.githubusercontent.com/0xEX75/0xEX75.github.io/master/000.PNG)
 
+Ensuite, interceptons la communication entre le client et serveur pour falsifier la communication entre le client et le serveur à l'aide de `BurpSuite`.
