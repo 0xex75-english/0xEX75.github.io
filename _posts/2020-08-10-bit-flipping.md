@@ -17,3 +17,11 @@ Chaque fois que vous vous connectez sur un `site web`, le serveur vous donnent u
 Si votre message que vous souhaitez chiffrer est « hello », chaque fois que vous chiffrez le mot «hello», il en résultera toujours la même sortie chiffrée. Cela pose un risque de sécurité grave car un attaquant peut procéder à une attaque en chiffrant simplement une liste de mots, puis en les comparant aux valeurs chiffrées, révélant ainsi le jeton. L'attaquant peut alors créer son propre token, le crypter et l'utiliser pour se connecter en tant qu'autre utilisateur. CBC est un moyen de randomiser la sortie de la valeur chiffrée.
 
 ![forthebadge made-with-python](https://www.researchgate.net/profile/Mousa_Farajallah/publication/308826472/figure/fig1/AS:391837119467524@1470432657367/AES-encryption-system-in-CFB-mode.png)
+
+Le système est simple, le chiffrement `CBC` fonctionne par bloc, c'est-à-dire que pour qu'un bloc soit chiffré, il a besoin du bloc précédent pour qu'il soit chiffré.
+
+`C1 = E(P1 ⊕ IV)`
+`Cn = E(Pn ⊕ Cn-1) — si n > 1`
+
+Vous me poserez la question, comment la première valeur du bloc peut être chiffré, si il n'a pas de précédent ?
+C'est là que le système `IV` (Initialization vector ou Vecteur d'initialisation) intervient, il randomise une donnée aléatoire pour que il chiffre avec le premier bloc et ainsi de suite jusqu'au dernier bloc.
