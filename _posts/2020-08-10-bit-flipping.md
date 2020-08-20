@@ -20,8 +20,8 @@ Si votre message que vous souhaitez chiffrer est « hello », chaque fois que vo
 
 Le système est simple, le chiffrement `CBC` fonctionne par bloc, c'est-à-dire que pour qu'un bloc soit chiffré, il a besoin du bloc précédent pour qu'il soit chiffré.
 
-`C1 = E(P1 ⊕ IV)`
-`Cn = E(Pn ⊕ Cn-1) — si n > 1`
+    C1 = E(P1 ⊕ IV)
+    Cn = E(Pn ⊕ Cn-1) — si n > 1
 
 Vous me poserez la question, comment la première valeur du bloc peut être chiffré, si il n'a pas de précédent ?
 C'est là que le système `IV` (Initialization vector ou Vecteur d'initialisation) intervient, il randomise une donnée aléatoire pour que il chiffre avec le premier bloc et ainsi de suite jusqu'au dernier bloc.
