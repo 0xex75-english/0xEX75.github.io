@@ -37,8 +37,59 @@ Dans mon cas, j'utiliserai un serveur `XAMPP` et d'installer `Mullitidae`, Mulli
 
 Dans la version 2.6.10 de Mutilidae, il existe une page appelée Niveau de privilège utilisateur. Ceci est conçu pour pratiquer l'attaque de retournement de bits CBC. Il se trouve sous: OWASP 2013, Authentification interrompue et gestion de session, Échelle de privilèges, afficher les privilèges des utilisateurs. 
 
-Comme vous pouvez le voir, le but de ce défi est de changer l'utilisateur et le groupe en `000`. La première chose dont nous avons besoin est l'`IV`. Nous devons utiliser un proxy qui se situe entre nous et le serveur pour intercepter la communation entre le `client` et le `serveur`. J'utiliserai `BurpSuite` pour cela. Burp suite est un outil utilisé pour aider au pentesting d'applications Web. Vous devez configurer votre navigateur pour passer par le proxy burp. La configuration du burp est hors de portée pour ce poste.
+Comme vous pouvez le voir, le but de ce défi est de changer l'utilisateur et le groupe en `000`. La première chose dont nous avons besoin est l'`IV`. Nous devons utiliser un proxy qui se situe entre nous et le serveur pour intercepter la communation entre le `client` et le `serveur`. J'utiliserai `BurpSuite` pour cela. `BurpSuite` est un outil utilisé pour aider au pentesting d'applications Web. vous devez configurer votre navigateur pour passer par le proxy Burp. La configuration du `BurpSuite` est hors de portée pour ce poste.
 
 ![forthebadge made-with-python](https://raw.githubusercontent.com/0xEX75/0xEX75.github.io/master/000.PNG)
 
-Ensuite, interceptons la communication entre le client et serveur pour falsifier la communication entre le client et le serveur à l'aide de `BurpSuite`.
+Ensuite, interceptons la communication entre le client et serveur pour falsifier la communication entre le client et le serveur à l'aide de `BurpSuite`. 
+
+Si nous modifions les deux premières valeurs par `FFc24fc1ab650b25b4114e93a98f1eba`, nous aurons une chose inintellegible en sortie, ce qui prouve que nous avons le pouvoir sur le `Cookie`.
+
+![forthebadge made-with-python](https://github.com/0xEX75/0xEX75.github.io/blob/master/valeur.PNG)
+
+FFFF4fc1ab650b25b4114e93a98f1eba
+FFFFFFc1ab650b25b4114e93a98f1eba
+FFFFFFFFab650b25b4114e93a98f1eba
+FFFFFFFFFF650b25b4114e93a98f1eba
+FFFFFFFFFFFFFFFFb4114e93a98f1eba
+
+Si nous modifions ainsi de suite, nous aurons totalement débordé la sortie standard du système. Ok, donc nous savons le bit que nous devons modifier pour changer la partie du champ ID utilisateur. Notez ceci car nous en aurons besoin plus tard. Continuez à retourner les bits jusqu'à ce que vous arriviez à la partie de l'ID de groupe qui doit être modifiée.
+
+Donc les bits à modifiers sont `6bc24fc1 FF 650b FF b4114e93a98f1eba`, cela nous donnera en sortie :
+
+![forthebadge made-with-python](https://raw.githubusercontent.com/0xEX75/0xEX75.github.io/master/0e.PNG)
+
+Nous avons donc trouvé les bits que nous devons modifier pour modifier les parties correctes de l'ID d'utilisateur et de groupe. L'étape suivante consiste à les modifier de manière à les renvoyer sous forme de zéro. Nous voyons que l'ID de utilisateur que nous avons envoyé `FF` a renvoyé « e ». Le FF que nous avons envoyé était une valeur hexadécimale et le « e » est un littéral donc le «e» doit être converti en HEX. Utilisez `Python` pour décoder « e » en HEX renvoie `65`. Maintenant, nous XORons `FF` avec `65`.
+
+    $ import binascii
+    $ binascii.hexlify(b'e')
+    '65'
+    $ print hex(0xff ^ 0x65)
+    '0x9a'
+    
+La valeur XORed renvoie la valeur HEX `9a`. Pour obtenir complètement la valeur `0`, nous devons convertir `0` en `HEX` ce qui nous donnera `30` et ensuite de `XOR` cette valeur avec `9a` 
+
+    $ hex(0x30 ^ 0x9a)
+    '0xaa'
+
+Donc maintenant le `Cookie` prend cette forme `6bc24fc1 aa 650b FF b4114e93a98f1eba`, il nous manque juste le dernier `FF`, si nous regardons à travers `BurpSuite`, nous verrons bien que le `000` est bien présent, ce qui signifie que nous sommes dans la bonne voie.
+
+![forthebadge made-with-python](https://github.com/0xEX75/0xEX75.github.io/blob/master/done.PNG?raw=true)
+
+Donc, nous sommes sur un problème, il y a un point d'interrogation inintellegible, nous devons trouver une valeur qui peut être lisible, donc essayons par exemple `31` cela nous renvoie un pourcentage, donc il nous reste plus que à convertir `%` en HEX ce qui nous donnera `25`, ensuite de XOR `0x31` avec `0x25` (`0x14`) et enfin de `XOR` `0x30` avec `0x14`.
+
+    $ import binascii
+    $ binascii.hexlify(b'%')
+    '25'
+    $ print hex(0x31 ^ 0x25)
+    0x14
+    $ hex(0x30 ^ 0x14)
+    '0x24'
+    
+C'est parfait, nous sommes root, 6bc24fc1`aa`650b`24`b4114e93a98f1eba.
+
+![forthebadge made-with-python](https://github.com/0xEX75/0xEX75.github.io/blob/master/root.PNG?raw=true)
+
+# Conclusion
+
+Voilà, nous arrivons enfin au bout de cet article qui, je l’espère, vous aura plus. J’ai essayer de vous expliquez le fonctionnement de la technique par bit flipping, n’hésitez pas à me contacter sur les réseaux sociaux, je suis toujours disponible pour vous répondre.
