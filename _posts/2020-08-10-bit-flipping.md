@@ -45,7 +45,7 @@ Ensuite, interceptons la communication entre le client et serveur pour falsifier
 
 Si nous modifions les deux premières valeurs par `FFc24fc1ab650b25b4114e93a98f1eba`, nous aurons une chose inintellegible en sortie, ce qui prouve que nous avons le pouvoir sur le `Cookie`.
 
-![forthebadge made-with-python](https://github.com/0xEX75/0xEX75.github.io/blob/master/valeur.PNG)
+![forthebadge made-with-python](https://raw.githubusercontent.com/0xEX75/0xEX75.github.io/master/valeur.PNG)
 
 FFFF4fc1ab650b25b4114e93a98f1eba
 FFFFFFc1ab650b25b4114e93a98f1eba
